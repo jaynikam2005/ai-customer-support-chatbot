@@ -145,44 +145,70 @@ class FAQMatcher:
             
         user_message = user_message.lower().strip()
         
-        # Method 1: TF-IDF similarity
+        # Method 1: TF-IDF similarity - Fast initial filtering
         tfidf_scores = self._compute_tfidf_similarity(user_message)
         
-        # Method 2: Semantic similarity (if available)
+        # Find top candidates with TF-IDF for performance optimization
+        # Only compute expensive semantic similarity for the most promising candidates
+        top_tfidf_threshold = 0.4  # High TF-IDF score threshold for direct match
+        
+        # Find best TF-IDF match
+        best_tfidf_idx = np.argmax(tfidf_scores)
+        best_tfidf_score = tfidf_scores[best_tfidf_idx]
+        
+        # If we have a very good TF-IDF match, return it immediately
+        if best_tfidf_score >= top_tfidf_threshold:
+            best_faq = self.knowledge_base[best_tfidf_idx]
+            return {
+                'question': best_faq['question'],
+                'response': best_faq['response'],
+                'intent': best_faq['intent'],
+                'confidence': min(float(best_tfidf_score), 1.0),
+                'match_type': 'tfidf'
+            }
+        
+        # Otherwise, get top 3 candidates for semantic analysis
+        top_indices = np.argsort(tfidf_scores)[-3:]  # Get indices of top 3 scores
+        
+        # Only process semantic similarity if the model is available
         semantic_scores = None
         if self.semantic_embeddings is not None:
+            # Only compute semantic similarity for top candidates
             semantic_scores = await self._compute_semantic_similarity(user_message)
-        
-        # Combine scores
-        combined_scores = []
-        for i in range(len(self.knowledge_base)):
-            tfidf_score = tfidf_scores[i]
-            semantic_score = semantic_scores[i] if semantic_scores is not None else 0.0
-            
-            # Weighted combination (60% semantic, 40% TF-IDF)
             if semantic_scores is not None:
-                combined_score = 0.6 * semantic_score + 0.4 * tfidf_score
-            else:
-                combined_score = tfidf_score
+                # Only keep scores for top TF-IDF candidates to save computation
+                filtered_semantic_scores = [semantic_scores[i] for i in top_indices]
                 
-            combined_scores.append(combined_score)
+                # Find best semantic match among top TF-IDF candidates
+                best_semantic_idx = np.argmax(filtered_semantic_scores)
+                best_idx = top_indices[best_semantic_idx]
+                
+                # Calculate combined score
+                best_score = 0.6 * semantic_scores[best_idx] + 0.4 * tfidf_scores[best_idx]
+                
+                if best_score >= 0.3:  # Minimum threshold
+                    best_faq = self.knowledge_base[best_idx]
+                    return {
+                        'question': best_faq['question'],
+                        'response': best_faq['response'],
+                        'intent': best_faq['intent'],
+                        'confidence': min(float(best_score), 1.0),  # Ensure confidence is at most 1.0
+                        'match_type': 'combined'
+                    }
         
-        # Find best match
-        best_idx = np.argmax(combined_scores)
-        best_score = combined_scores[best_idx]
-        
-        if best_score < 0.3:  # Minimum threshold
-            return None
+        # If semantic matching didn't find a good match, fall back to TF-IDF
+        if best_tfidf_score >= 0.3:  # Lower threshold for fallback
+            best_faq = self.knowledge_base[best_tfidf_idx]
+            return {
+                'question': best_faq['question'],
+                'response': best_faq['response'],
+                'intent': best_faq['intent'],
+                'confidence': min(float(best_tfidf_score), 1.0),
+                'match_type': 'tfidf'
+            }
             
-        best_faq = self.knowledge_base[best_idx]
-        
-        return {
-            'question': best_faq['question'],
-            'response': best_faq['response'],
-            'intent': best_faq['intent'],
-            'confidence': float(best_score),
-            'match_type': 'combined' if semantic_scores is not None else 'tfidf'
-        }
+        # No good match found
+        return None
     
     def _compute_tfidf_similarity(self, user_message: str) -> List[float]:
         """Compute TF-IDF cosine similarity"""

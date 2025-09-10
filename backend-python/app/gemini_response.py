@@ -1,7 +1,9 @@
 import os
 import google.generativeai as genai
 import logging
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
+import hashlib
+import time
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -23,6 +25,11 @@ class GeminiResponseGenerator:
             'request', 'order_inquiry', 'technical_support',
             'billing', 'account', 'product_info', 'general'
         ]
+        
+        # Response cache to speed up repeated queries
+        self.response_cache = {}
+        self.cache_ttl = 3600  # Cache TTL in seconds (1 hour)
+        self.max_cache_size = 500  # Max number of entries in the cache
         
     async def load_models(self):
         """Initialize Gemini model"""
@@ -48,6 +55,24 @@ class GeminiResponseGenerator:
             if not self.model:
                 await self.load_models()
             
+            # Use simple caching to speed up responses for identical questions
+            # Only use cache for messages without conversation history
+            context_info = ""
+            if faq_context:
+                context_info = faq_context.get('question', '') + faq_context.get('response', '')
+            
+            # Only use cache for simple queries without extensive conversation history
+            should_use_cache = not conversation_history or len(conversation_history) <= 2
+            
+            if should_use_cache:
+                cache_key = self._create_cache_key(user_message, context_info)
+                cached_response = self._get_from_cache(cache_key)
+                
+                if cached_response:
+                    logger.info(f"Cache hit for message: {user_message[:30]}...")
+                    return cached_response
+            
+            # If no cache hit, generate a new response
             # Classify intent
             intent = await self._classify_intent(user_message)
             
@@ -59,12 +84,18 @@ class GeminiResponseGenerator:
             # Calculate confidence
             confidence = self._calculate_confidence(user_message, intent, response)
             
-            return {
+            result = {
                 'intent': intent,
                 'response': response,
                 'confidence': confidence,
                 'method': 'gemini'
             }
+            
+            # Cache the response if appropriate
+            if should_use_cache:
+                self._add_to_cache(cache_key, result)
+            
+            return result
             
         except Exception as e:
             logger.error(f"Error in Gemini response generation: {e}")
@@ -329,6 +360,41 @@ Could you provide more specific details about what you'd like to code?"""
         return {
             'intent': 'general',
             'response': "I'm here to help! Could you please rephrase your question or provide more details?",
-            'confidence': 0.5,
+            'confidence': min(0.5, 1.0),  # Ensure confidence is at most 1.0
             'method': 'fallback'
         }
+        
+    def _create_cache_key(self, user_message: str, context_info: str = "") -> str:
+        """Create a cache key from the user message and context"""
+        # Normalize the input text
+        normalized_message = user_message.lower().strip()
+        combined_str = f"{normalized_message}|{context_info}"
+        
+        # Create a hash of the message
+        return hashlib.md5(combined_str.encode('utf-8')).hexdigest()
+    
+    def _get_from_cache(self, cache_key: str) -> Optional[Dict[str, Any]]:
+        """Get a response from cache if it exists and is not expired"""
+        if cache_key not in self.response_cache:
+            return None
+        
+        cached_item = self.response_cache[cache_key]
+        timestamp, response = cached_item
+        
+        # Check if the cache entry has expired
+        if time.time() - timestamp > self.cache_ttl:
+            del self.response_cache[cache_key]
+            return None
+            
+        return response
+    
+    def _add_to_cache(self, cache_key: str, response: Dict[str, Any]) -> None:
+        """Add a response to the cache"""
+        # If cache is full, remove the oldest entry
+        if len(self.response_cache) >= self.max_cache_size:
+            oldest_key = min(self.response_cache.keys(), 
+                           key=lambda k: self.response_cache[k][0])
+            del self.response_cache[oldest_key]
+        
+        # Add the new entry with current timestamp
+        self.response_cache[cache_key] = (time.time(), response)

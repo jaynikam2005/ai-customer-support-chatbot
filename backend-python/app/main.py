@@ -1,10 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, Dict, Any
 import logging
 from contextlib import asynccontextmanager
 import uvicorn
 import os
+import time
+import hashlib
+import json
+from collections import OrderedDict
+import threading
 
 from .faq_matcher import FAQMatcher
 from .gemini_response import GeminiResponseGenerator  # Use Gemini instead
@@ -18,6 +23,56 @@ logger = logging.getLogger(__name__)
 # Global variables for models
 faq_matcher = None
 llm_generator = None
+
+# Simple LRU Cache for /analyze endpoint
+class ResponseCache:
+    def __init__(self, max_size=100, ttl_seconds=3600):
+        self.cache = OrderedDict()
+        self.max_size = max_size
+        self.ttl_seconds = ttl_seconds
+        self.lock = threading.RLock()
+        
+    def get(self, key):
+        """Get item from cache if it exists and is not expired"""
+        with self.lock:
+            if key not in self.cache:
+                return None
+                
+            value, timestamp = self.cache[key]
+            
+            # Check if expired
+            if time.time() - timestamp > self.ttl_seconds:
+                del self.cache[key]
+                return None
+                
+            # Move to end to mark as recently used
+            self.cache.move_to_end(key)
+            return value
+            
+    def put(self, key, value):
+        """Add item to cache with current timestamp"""
+        with self.lock:
+            if key in self.cache:
+                del self.cache[key]
+                
+            # If cache is full, remove oldest item
+            if len(self.cache) >= self.max_size:
+                self.cache.popitem(last=False)
+                
+            self.cache[key] = (value, time.time())
+            
+    def create_key(self, request_data):
+        """Create cache key from request data"""
+        # For simplicity, we only cache requests with no conversation history
+        # or with very short conversation history
+        if len(request_data.conversation_history or []) > 2:
+            return None
+            
+        key_str = request_data.message.lower().strip()
+        return hashlib.md5(key_str.encode('utf-8')).hexdigest()
+            
+# Initialize response cache
+response_cache = ResponseCache(max_size=200)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -104,6 +159,14 @@ async def analyze_message(request: AnalyzeRequest):
         if not user_message:
             raise HTTPException(status_code=400, detail="Message cannot be empty")
         
+        # Try to get from cache first if it's a simple question
+        cache_key = response_cache.create_key(request)
+        if cache_key:
+            cached_response = response_cache.get(cache_key)
+            if cached_response:
+                logger.info(f"Cache hit for message: {user_message[:30]}...")
+                return cached_response
+        
         logger.info(f"Analyzing message: {user_message[:50]}... (with {len(conversation_history)} history messages)")
         
         # Step 1: Try FAQ matching
@@ -111,12 +174,18 @@ async def analyze_message(request: AnalyzeRequest):
         
         if faq_result and faq_result['confidence'] >= 0.7:  # High confidence FAQ match
             logger.info(f"FAQ match found with confidence: {faq_result['confidence']:.2f}")
-            return AnalyzeResponse(
+            response = AnalyzeResponse(
                 intent=faq_result['intent'],
                 reply=faq_result['response'],
                 confidence=faq_result['confidence'],
                 source="faq"
             )
+            
+            # Cache the response if appropriate
+            if cache_key:
+                response_cache.put(cache_key, response)
+                
+            return response
         
         # Step 2: Fall back to Gemini with conversation context
         logger.info("No high-confidence FAQ match, using Gemini with context...")
@@ -126,12 +195,18 @@ async def analyze_message(request: AnalyzeRequest):
             conversation_history=conversation_history
         )
         
-        return AnalyzeResponse(
+        response = AnalyzeResponse(
             intent=gemini_result['intent'],
             reply=gemini_result['response'],
             confidence=gemini_result['confidence'],
             source="gemini"
         )
+        
+        # Cache the response if appropriate
+        if cache_key:
+            response_cache.put(cache_key, response)
+            
+        return response
         
     except Exception as e:
         logger.error(f"Error analyzing message: {e}")
