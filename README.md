@@ -480,6 +480,32 @@ These scripts will:
    - [📝 Railway Deployment Guide](RAILWAY_DEPLOYMENT.md) - Full instructions
 </details>
 
+### 🟣 **Render Deployment**
+
+Deploy your application to [Render](https://render.com) using our blueprint configuration:
+
+<details>
+<summary><b>🚀 One-Click Render Deployment</b></summary>
+
+1. Fork/Clone this repository to your GitHub account
+2. Log in to [Render](https://render.com)
+3. Click "New" → "Blueprint"
+4. Connect your GitHub repository
+5. Render will automatically detect our `render.yaml` blueprint
+6. Click "Apply" to create all services
+</details>
+
+<details>
+<summary><b>📋 Manual Render Setup</b></summary>
+
+1. Deploy PostgreSQL database
+2. Deploy each service (Java backend, Python AI, Frontend)
+3. Set required environment variables
+4. Configure cross-service communication
+
+For complete instructions, see our [📝 Render Deployment Guide](RENDER_DEPLOYMENT.md).
+</details>
+
 ### ☁️ **Other Cloud Deployment Options**
 
 We provide comprehensive deployment guidance for multiple platforms:

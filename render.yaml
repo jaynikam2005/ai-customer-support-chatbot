@@ -1,0 +1,111 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: chatbot-db
+    env: docker
+    plan: free
+    repo: https://github.com/render-examples/postgres.git
+    envVars:
+      - key: POSTGRES_USER
+        value: chatbot_user
+      - key: POSTGRES_PASSWORD
+        value: chatbot_password
+      - key: POSTGRES_DB
+        value: chatbot
+    disk:
+      name: postgres
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 10
+    autoDeploy: false
+
+  # Java Backend
+  - type: web
+    name: chatbot-java-api
+    env: docker
+    dockerfilePath: ./backend-java/Dockerfile
+    dockerContext: ./backend-java
+    plan: free
+    buildCommand: cd backend-java && ./mvnw package -DskipTests
+    envVars:
+      - key: SERVER_PORT
+        value: 8080
+      - key: SPRING_DATASOURCE_URL
+        fromService:
+          type: pserv
+          name: chatbot-db
+          envVarKey: POSTGRES_URL
+      - key: SPRING_DATASOURCE_USERNAME
+        fromService:
+          type: pserv
+          name: chatbot-db
+          envVarKey: POSTGRES_USER
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromService:
+          type: pserv
+          name: chatbot-db
+          envVarKey: POSTGRES_PASSWORD
+      - key: AI_SERVICE_URL
+        fromService:
+          type: web
+          name: chatbot-python-ai
+          property: defaultURL
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: 86400000
+      - key: JAVA_OPTS
+        value: "-Xmx512m -Xms128m"
+      - key: APP_CORS_ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: chatbot-frontend
+          property: defaultURL
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+  # Python AI Service
+  - type: web
+    name: chatbot-python-ai
+    env: docker
+    dockerfilePath: ./backend-python/Dockerfile
+    dockerContext: ./backend-python
+    plan: free
+    buildCommand: cd backend-python && pip install -r requirements.txt
+    startCommand: cd backend-python && python -m app.main
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PYTHONPATH
+        value: /workspace
+      - key: ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: chatbot-frontend
+          property: defaultURL
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # React Frontend
+  - type: web
+    name: chatbot-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npx serve -s dist
+    envVars:
+      - key: NODE_VERSION
+        value: 18.16.0
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: chatbot-java-api
+          property: defaultURL
+    autoDeploy: true
