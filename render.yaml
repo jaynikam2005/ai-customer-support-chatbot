@@ -12,7 +12,7 @@ services:
     healthCheckPath: /health
     plan: starter
     envVars:
-      - key: GOOGLE_API_KEY
+      - key: AIzaSyBws4xBo1bGCF3Tecqc68FBP44VhcnYY7E
         sync: false
       - key: GEMINI_MODEL
         value: gemini-1.5-flash
@@ -21,7 +21,6 @@ services:
       - key: ALLOWED_ORIGINS
         fromService:
           name: frontend
-          type: static
           property: url
 
   - type: web
@@ -62,24 +61,22 @@ services:
       - key: AI_SERVICE_URL
         fromService:
           name: python-ai-service
-          type: web
           property: url
       - key: APP_CORS_ALLOWED_ORIGINS
         fromService:
           name: frontend
-          type: static
           property: url
       - key: JAVA_OPTS
         value: -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -Xmx512m
 
-  - type: static
+  - type: web
     name: frontend
+    env: static
     buildCommand: npm ci && npm run build
-    publishPath: dist
+    staticPublishPath: dist
     plan: starter
     envVars:
       - key: VITE_API_URL
         fromService:
           name: java-backend
-          type: web
           property: url
