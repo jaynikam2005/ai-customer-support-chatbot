@@ -25,7 +25,7 @@ services:
     envVars:
       - key: SERVER_PORT
         value: 8080
-      # Database connection (separate vars)
+      # Database connection
       - key: DB_HOST
         fromService:
           type: pserv
@@ -59,8 +59,8 @@ services:
           type: web
           name: chatbot-python-ai
           property: port
-      # JWT
-      - key: TWABqmnoex1rWKNFuFoHpWXiL2WtQD263Doje8CnfZw=
+      # JWT secret
+      - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRATION
         value: 86400000
@@ -89,8 +89,8 @@ services:
     plan: free
     buildCommand: cd backend-python && pip install -r requirements.txt
     envVars:
-      - key: AIzaSyBws4xBo1bGCF3Tecqc68FBP44VhcnYY7E
-        sync: false
+      - key: GOOGLE_API_KEY
+        value: "AIzaSyBws4xBo1bGCF3Tecqc68FBP44VhcnYY7E"
       - key: GEMINI_MODEL
         value: gemini-1.5-flash
       - key: HOST
