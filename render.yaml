@@ -1,0 +1,89 @@
+databases:
+  - name: chatbot-db
+    databaseName: chatbot
+    plan: starter
+
+services:
+  - type: web
+    name: python-ai-service
+    env: docker
+    dockerfilePath: backend-python/Dockerfile
+    autoDeploy: true
+    healthCheckPath: /health
+    plan: starter
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: HOST
+        value: 0.0.0.0
+      - key: ALLOWED_ORIGINS
+        fromService:
+          name: frontend
+          type: static_site
+          property: url
+
+  - type: web
+    name: java-backend
+    env: docker
+    dockerfilePath: backend-java/Dockerfile
+    autoDeploy: true
+    healthCheckPath: /actuator/health
+    plan: starter
+    # Force Spring Boot to listen on Render's PORT and wire DB creds at runtime
+    startCommand: >
+      sh -c 'export SPRING_DATASOURCE_URL="jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME?sslmode=require";
+      exec java $JAVA_OPTS -jar app.jar
+      --server.port=$PORT
+      --spring.datasource.url=$SPRING_DATASOURCE_URL
+      --spring.datasource.username=$DB_USER
+      --spring.datasource.password=$DB_PASSWORD'
+    envVars:
+      # Database wiring (from managed Postgres)
+      - key: DB_HOST
+        fromDatabase:
+          name: chatbot-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: chatbot-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: chatbot-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: chatbot-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: chatbot-db
+          property: password
+      # Service URLs and CORS
+      - key: AI_SERVICE_URL
+        fromService:
+          name: python-ai-service
+          type: web
+          property: url
+      - key: APP_CORS_ALLOWED_ORIGINS
+        fromService:
+          name: frontend
+          type: static_site
+          property: url
+      # Optional JVM tuning
+      - key: JAVA_OPTS
+        value: -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -Xmx512m
+
+  - type: static_site
+    name: frontend
+    buildCommand: npm ci && npm run build
+    publishPath: dist
+    plan: starter
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: java-backend
+          type: web
+          property: url
