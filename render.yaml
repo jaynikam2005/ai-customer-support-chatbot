@@ -21,7 +21,7 @@ services:
       - key: ALLOWED_ORIGINS
         fromService:
           name: frontend
-          type: static_site
+          type: static
           property: url
 
   - type: web
@@ -31,7 +31,6 @@ services:
     autoDeploy: true
     healthCheckPath: /actuator/health
     plan: starter
-    # Force Spring Boot to listen on Render's PORT and wire DB creds at runtime
     startCommand: >
       sh -c 'export SPRING_DATASOURCE_URL="jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME?sslmode=require";
       exec java $JAVA_OPTS -jar app.jar
@@ -40,7 +39,6 @@ services:
       --spring.datasource.username=$DB_USER
       --spring.datasource.password=$DB_PASSWORD'
     envVars:
-      # Database wiring (from managed Postgres)
       - key: DB_HOST
         fromDatabase:
           name: chatbot-db
@@ -61,7 +59,6 @@ services:
         fromDatabase:
           name: chatbot-db
           property: password
-      # Service URLs and CORS
       - key: AI_SERVICE_URL
         fromService:
           name: python-ai-service
@@ -70,13 +67,12 @@ services:
       - key: APP_CORS_ALLOWED_ORIGINS
         fromService:
           name: frontend
-          type: static_site
+          type: static
           property: url
-      # Optional JVM tuning
       - key: JAVA_OPTS
         value: -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -Xmx512m
 
-  - type: static_site
+  - type: static
     name: frontend
     buildCommand: npm ci && npm run build
     publishPath: dist
