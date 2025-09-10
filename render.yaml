@@ -25,11 +25,19 @@ services:
     envVars:
       - key: SERVER_PORT
         value: 8080
-      - key: SPRING_DATASOURCE_URL
+      # Database connection (separate vars)
+      - key: DB_HOST
         fromService:
           type: pserv
           name: chatbot-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromService:
+          type: pserv
+          name: chatbot-db
+          property: port
+      - key: DB_NAME
+        value: chatbot
       - key: SPRING_DATASOURCE_USERNAME
         fromService:
           type: pserv
@@ -40,6 +48,7 @@ services:
           type: pserv
           name: chatbot-db
           envVarKey: POSTGRES_PASSWORD
+      # AI Python service reference
       - key: AI_SERVICE_HOST
         fromService:
           type: web
@@ -50,12 +59,14 @@ services:
           type: web
           name: chatbot-python-ai
           property: port
-      - key: JWT_SECRET
+      # JWT
+      - key: TWABqmnoex1rWKNFuFoHpWXiL2WtQD263Doje8CnfZw=
         generateValue: true
       - key: JWT_EXPIRATION
         value: 86400000
       - key: JAVA_OPTS
         value: "-Xmx512m -Xms128m"
+      # Frontend CORS reference
       - key: APP_CORS_ALLOWED_ORIGINS_HOST
         fromService:
           type: web
@@ -78,7 +89,7 @@ services:
     plan: free
     buildCommand: cd backend-python && pip install -r requirements.txt
     envVars:
-      - key: GOOGLE_API_KEY
+      - key: AIzaSyBws4xBo1bGCF3Tecqc68FBP44VhcnYY7E
         sync: false
       - key: GEMINI_MODEL
         value: gemini-1.5-flash
