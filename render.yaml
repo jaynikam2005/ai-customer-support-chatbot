@@ -12,16 +12,14 @@ services:
     healthCheckPath: /health
     plan: starter
     envVars:
-      - key: AIzaSyBws4xBo1bGCF3Tecqc68FBP44VhcnYY7E
-        sync: false
+      - key: GOOGLE_API_KEY
+        value: AIzaSyBws4xBo1bGCF3Tecqc68FBP44VhcnYY7E
       - key: GEMINI_MODEL
         value: gemini-1.5-flash
       - key: HOST
         value: 0.0.0.0
       - key: ALLOWED_ORIGINS
-        fromService:
-          name: frontend
-          property: url
+        value: https://frontend-xxxx.onrender.com
 
   - type: web
     name: java-backend
@@ -30,13 +28,6 @@ services:
     autoDeploy: true
     healthCheckPath: /actuator/health
     plan: starter
-    startCommand: >
-      sh -c 'export SPRING_DATASOURCE_URL="jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME?sslmode=require";
-      exec java $JAVA_OPTS -jar app.jar
-      --server.port=$PORT
-      --spring.datasource.url=$SPRING_DATASOURCE_URL
-      --spring.datasource.username=$DB_USER
-      --spring.datasource.password=$DB_PASSWORD'
     envVars:
       - key: DB_HOST
         fromDatabase:
@@ -58,14 +49,14 @@ services:
         fromDatabase:
           name: chatbot-db
           property: password
+      - key: SERVER_PORT
+        value: ${PORT}
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require
       - key: AI_SERVICE_URL
-        fromService:
-          name: python-ai-service
-          property: url
+        value: https://python-ai-service-xxxx.onrender.com
       - key: APP_CORS_ALLOWED_ORIGINS
-        fromService:
-          name: frontend
-          property: url
+        value: https://frontend-xxxx.onrender.com
       - key: JAVA_OPTS
         value: -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -Xmx512m
 
@@ -74,9 +65,6 @@ services:
     env: static
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
-    plan: starter
     envVars:
       - key: VITE_API_URL
-        fromService:
-          name: java-backend
-          property: url
+        value: https://java-backend-xxxx.onrender.com
