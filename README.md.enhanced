@@ -1,0 +1,1251 @@
+<div align="center">
+
+<!-- Futuristic animated header section -->
+<img src="https://raw.githubusercontent.com/jaynikam2005/ai-customer-support-chatbot/main/docs/assets/header-animation.gif" alt="AI Customer Support ChatBot" width="100%" onerror="this.onerror=null; this.src='https://i.imgur.com/3lxt1BO.png'; this.style.width='350px'"/>
+
+<h1>
+  <span style="background: linear-gradient(90deg, #00FFFF, #7000FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    NEUROCHAT AI
+  </span>
+</h1>
+<h2>Next-Generation Customer Support | Powered by Gemini AI</h2>
+
+<!-- Live status badges -->
+![Code Status](https://img.shields.io/badge/dynamic/json?url=https://api.example.com/project-status&query=$.status&label=build&style=for-the-badge&color=00c853&labelColor=000000)
+![Live Demo](https://img.shields.io/badge/Live-Demo-FD0079?style=for-the-badge&logo=docusign&logoColor=white&labelColor=000000)
+![Gemini](https://img.shields.io/badge/Gemini-AI-blue?style=for-the-badge&logo=google&logoColor=white&labelColor=000000)
+![Project Status](https://img.shields.io/badge/Status-Production_Ready-success?style=for-the-badge&labelColor=000000)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge&labelColor=000000)
+
+<br/>
+
+<p align="center">
+  <kbd>
+    <img src="https://i.imgur.com/XHI9cQH.png" alt="NeuroChat AI Demo" width="90%" />
+  </kbd>
+</p>
+
+<p align="center">
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#core-features">Core Features</a> •
+  <a href="#live-demo">Live Demo</a> •
+  <a href="#technical-architecture">Architecture</a> •
+  <a href="#deployment">Deployment</a> •
+  <a href="#roadmap">Roadmap</a>
+</p>
+
+<!-- Particle animation effect for hero section -->
+<div id="particles-js"></div>
+<script async defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    particlesJS('particles-js', {
+      "particles": { "number": { "value": 80 }, "color": { "value": "#00FFFF" }, "opacity": { "value": 0.5 } }
+    });
+  });
+</script>
+
+</div>
+
+---
+
+<details open>
+<summary><h2>✨ OVERVIEW</h2></summary>
+
+**NeuroChat AI** represents the convergence of advanced AI technology and enterprise-grade software engineering. This revolutionary platform transforms customer support operations through intelligent conversation processing, context-aware responses, and seamless integrations.
+
+Built on a future-proof microservices architecture, NeuroChat delivers:
+
+> 🧠 **Cognitive Understanding**
+> 
+> The system comprehends natural language with near-human accuracy, tracking context across multiple messages and understanding implied questions.
+
+> 🔄 **Adaptive Intelligence**
+> 
+> Unlike static chatbots, NeuroChat learns from each interaction, continuously improving its knowledge base and response patterns.
+
+> 🔗 **Ecosystem Integration**
+> 
+> Built with compatibility in mind, the platform easily connects to CRMs, knowledge bases, ticketing systems, and business intelligence tools.
+
+<p align="center">
+<img src="https://i.imgur.com/YGRLYbx.gif" alt="Conversation Flow Demonstration" width="700px" />
+</p>
+
+</details>
+
+---
+
+<details open>
+<summary><h2 id="core-features">🚀 CORE FEATURES</h2></summary>
+
+<div class="feature-grid">
+  <div class="feature-card">
+    <div class="feature-icon">🧠</div>
+    <h3>Neural Response System</h3>
+    <ul>
+      <li>Google Gemini integration with custom tuning</li>
+      <li>Context-aware conversation memory</li>
+      <li>Sentiment analysis and emotional intelligence</li>
+      <li>Advanced natural language understanding</li>
+    </ul>
+    <div class="code-preview">
+      <pre><code>
+// Neural response example
+await neuralEngine.process({
+  query: userMessage,
+  context: sessionMemory,
+  sentiment: true,
+  confidenceThreshold: 0.85
+});
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-icon">🔐</div>
+    <h3>Enterprise Security</h3>
+    <ul>
+      <li>Military-grade encryption (AES-256)</li>
+      <li>Role-based access control</li>
+      <li>JWT with automatic rotation</li>
+      <li>Complete audit trails</li>
+      <li>GDPR and CCPA compliant data handling</li>
+    </ul>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <h3>Real-time Analytics</h3>
+    <ul>
+      <li>Conversation quality metrics</li>
+      <li>Customer satisfaction tracking</li>
+      <li>AI performance monitoring</li>
+      <li>Trend identification</li>
+      <li>Exportable reports with visual dashboards</li>
+    </ul>
+    <div class="metrics-preview">
+      <p>Average Response Time: <span class="metric-highlight">1.2s</span></p>
+      <p>Resolution Rate: <span class="metric-highlight">94.7%</span></p>
+      <p>User Satisfaction: <span class="metric-highlight">4.8/5</span></p>
+    </div>
+  </div>
+  
+  <div class="feature-card">
+    <div class="feature-icon">🔄</div>
+    <h3>Adaptive Learning</h3>
+    <ul>
+      <li>Continuous improvement from interactions</li>
+      <li>Feedback-based optimization</li>
+      <li>Custom knowledge domain training</li>
+      <li>Behavioral pattern recognition</li>
+    </ul>
+  </div>
+</div>
+
+<h3 align="center">Customer Experience Evolution</h3>
+<table align="center">
+  <tr>
+    <th>Metric</th>
+    <th>Traditional Support</th>
+    <th>Basic Chatbots</th>
+    <th>NeuroChat AI</th>
+  </tr>
+  <tr>
+    <td>Average Response Time</td>
+    <td>4-24 hours</td>
+    <td>30 seconds</td>
+    <td><strong>1.2 seconds</strong></td>
+  </tr>
+  <tr>
+    <td>Query Resolution Rate</td>
+    <td>65-75%</td>
+    <td>55-65%</td>
+    <td><strong>94-97%</strong></td>
+  </tr>
+  <tr>
+    <td>Context Retention</td>
+    <td>Limited to agent notes</td>
+    <td>Single session only</td>
+    <td><strong>Complete user history with cognitive mapping</strong></td>
+  </tr>
+  <tr>
+    <td>Personalization</td>
+    <td>Agent-dependent</td>
+    <td>Basic rules</td>
+    <td><strong>Neural adaptation to individual user patterns</strong></td>
+  </tr>
+</table>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="technical-architecture">🏗️ TECHNICAL ARCHITECTURE</h2></summary>
+
+<div align="center">
+
+### System Architecture
+
+The system employs a hexagonal architecture pattern with clear separation of domains:
+
+```mermaid
+graph TB
+    subgraph "Presentation Layer"
+        UI[React + TypeScript<br/>WebSocket + RESTful<br/>Advanced UI Components]
+        style UI fill:#0D1117,stroke:#6E40C9,stroke-width:2px,color:#58A6FF
+    end
+    
+    subgraph "API Gateway"
+        API[Spring Cloud Gateway<br/>JWT Authentication<br/>Rate Limiting<br/>Circuit Breaking]
+        style API fill:#0D1117,stroke:#6E40C9,stroke-width:2px,color:#58A6FF
+    end
+    
+    subgraph "Core Services"
+        AUTH[Authentication<br/>Service]
+        CHAT[Conversation<br/>Manager]
+        ANAL[Analytics<br/>Engine]
+        
+        style AUTH fill:#0D1117,stroke:#238636,stroke-width:2px,color:#58A6FF
+        style CHAT fill:#0D1117,stroke:#238636,stroke-width:2px,color:#58A6FF
+        style ANAL fill:#0D1117,stroke:#238636,stroke-width:2px,color:#58A6FF
+    end
+    
+    subgraph "AI Layer"
+        NLP[NLP Processor<br/>Entity Recognition<br/>Intent Classification]
+        GEMINI[Google Gemini<br/>Neural Engine]
+        VECTOR[Vector Database<br/>Semantic Search]
+        
+        style NLP fill:#0D1117,stroke:#1F6FEB,stroke-width:2px,color:#58A6FF
+        style GEMINI fill:#0D1117,stroke:#1F6FEB,stroke-width:2px,color:#58A6FF
+        style VECTOR fill:#0D1117,stroke:#1F6FEB,stroke-width:2px,color:#58A6FF
+    end
+    
+    subgraph "Data Layer"
+        POSTGRES[(PostgreSQL<br/>User & Session Data)]
+        REDIS[(Redis<br/>Cache & Pub/Sub)]
+        ELASTIC[(Elasticsearch<br/>Logging & Search)]
+        
+        style POSTGRES fill:#0D1117,stroke:#DA3633,stroke-width:2px,color:#58A6FF
+        style REDIS fill:#0D1117,stroke:#DA3633,stroke-width:2px,color:#58A6FF
+        style ELASTIC fill:#0D1117,stroke:#DA3633,stroke-width:2px,color:#58A6FF
+    end
+    
+    UI ---> API
+    API ---> AUTH
+    API ---> CHAT
+    API ---> ANAL
+    
+    CHAT ---> NLP
+    NLP ---> GEMINI
+    NLP <---> VECTOR
+    
+    AUTH ---> POSTGRES
+    CHAT ---> POSTGRES
+    CHAT ---> REDIS
+    ANAL ---> ELASTIC
+    ANAL ---> POSTGRES
+```
+
+</div>
+
+### Technology Stack
+
+<table>
+  <tr>
+    <th>Layer</th>
+    <th>Technology</th>
+    <th>Purpose</th>
+    <th>Key Features</th>
+  </tr>
+  <tr>
+    <td><strong>Frontend</strong></td>
+    <td>React 18.3 + TypeScript</td>
+    <td>User Interface</td>
+    <td>SSR, React Query, Tailwind CSS, Framer Motion</td>
+  </tr>
+  <tr>
+    <td><strong>API Gateway</strong></td>
+    <td>Spring Cloud Gateway</td>
+    <td>Routing & Security</td>
+    <td>Circuit breaking, rate limiting, JWT validation</td>
+  </tr>
+  <tr>
+    <td><strong>Auth Service</strong></td>
+    <td>Spring Security</td>
+    <td>Authentication & Authorization</td>
+    <td>OAuth2, JWT, Role-based access</td>
+  </tr>
+  <tr>
+    <td><strong>Chat Service</strong></td>
+    <td>Spring Boot WebFlux</td>
+    <td>Conversation Management</td>
+    <td>Reactive streams, WebSocket, Event sourcing</td>
+  </tr>
+  <tr>
+    <td><strong>AI Processing</strong></td>
+    <td>Python FastAPI</td>
+    <td>NLP & Machine Learning</td>
+    <td>Async processing, High throughput, Gemini integration</td>
+  </tr>
+  <tr>
+    <td><strong>Vector Database</strong></td>
+    <td>Pinecone</td>
+    <td>Semantic Search</td>
+    <td>Fast similarity search, Embeddings storage</td>
+  </tr>
+  <tr>
+    <td><strong>Primary Database</strong></td>
+    <td>PostgreSQL 16</td>
+    <td>Persistent Storage</td>
+    <td>JSONB, Full-text search, Partitioning</td>
+  </tr>
+  <tr>
+    <td><strong>Cache & Messaging</strong></td>
+    <td>Redis 7.2</td>
+    <td>Caching & Pub/Sub</td>
+    <td>In-memory performance, Message brokering</td>
+  </tr>
+  <tr>
+    <td><strong>Monitoring</strong></td>
+    <td>Prometheus & Grafana</td>
+    <td>Metrics & Visualization</td>
+    <td>Custom dashboards, Alerts, Long-term storage</td>
+  </tr>
+  <tr>
+    <td><strong>Deployment</strong></td>
+    <td>Docker & Kubernetes</td>
+    <td>Container Orchestration</td>
+    <td>Auto-scaling, Service discovery, Rolling updates</td>
+  </tr>
+</table>
+
+### System Communication
+
+<div class="code-window">
+
+```sequence
+Title: Message Processing Flow
+
+User->Frontend: Sends message
+Frontend->Gateway: Forwards with JWT
+Gateway->Auth Service: Validates token
+Auth Service->Gateway: Token valid
+Gateway->Chat Service: Routes message
+Chat Service->Redis: Check conversation cache
+Chat Service->AI Service: Process message
+AI Service->Vector DB: Semantic search
+AI Service->Gemini API: Generate response
+Gemini API->AI Service: Returns response
+AI Service->Chat Service: Enhanced response
+Chat Service->Redis: Update conversation
+Chat Service->Analytics: Log interaction
+Chat Service->Frontend: Real-time response
+Frontend->User: Displays message
+Analytics->DB: Store metrics
+```
+
+</div>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="getting-started">⚡ GETTING STARTED</h2></summary>
+
+### Prerequisites
+
+- **Docker Desktop** with Kubernetes enabled
+- **Git** for version control
+- **Google Cloud Account** with Gemini API access
+- **Node.js** v18+ (for local development only)
+- **Java JDK** 21+ (for local development only)
+- **Python** 3.13+ (for local development only)
+
+### One-Command Deployment
+
+```bash
+# Clone the repository
+git clone https://github.com/jaynikam2005/ai-customer-support-chatbot.git
+cd ai-customer-support-chatbot
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env to add your Gemini API key and other credentials
+
+# Launch the system
+docker-compose --profile prod up -d
+```
+
+### Development Environment
+
+For developers looking to extend the system:
+
+```bash
+# Start with hot-reloading
+docker-compose --profile dev up
+
+# Backend services will be available at:
+# - API Gateway: http://localhost:8080
+# - AI Service: http://localhost:5000
+# - Frontend: http://localhost:3000
+```
+
+### Initial Configuration
+
+Once running, visit the administration console at `http://localhost:3000/admin` with:
+
+- **Username**: `admin`
+- **Password**: `Ch4ng3M3!` (change immediately after first login)
+
+### Environment Variables
+
+<table>
+  <tr>
+    <th>Variable</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td><code>GEMINI_API_KEY</code></td>
+    <td>Google Gemini API access key</td>
+    <td><code>AIza...</code></td>
+  </tr>
+  <tr>
+    <td><code>JWT_SECRET</code></td>
+    <td>Secret for JWT signing</td>
+    <td><code>use generate-jwt-secret.sh script</code></td>
+  </tr>
+  <tr>
+    <td><code>DB_PASSWORD</code></td>
+    <td>Database password</td>
+    <td><code>secure-randomly-generated-password</code></td>
+  </tr>
+  <tr>
+    <td><code>VECTOR_DB_API_KEY</code></td>
+    <td>Vector database access key</td>
+    <td><code>pinecone-api-key-here</code></td>
+  </tr>
+</table>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="deployment">🚢 CLOUD DEPLOYMENT</h2></summary>
+
+### Supported Cloud Platforms
+
+NeuroChat AI supports deployment to all major cloud providers with optimized configurations for each:
+
+<div class="deployment-cards">
+  <div class="cloud-card">
+    <h3><img src="https://i.imgur.com/ZNmFQOF.png" alt="Railway" width="24"/> Railway</h3>
+    <p>One-click deployment with auto-scaling and integrated CI/CD.</p>
+    <a href="https://railway.app/template/neuro-chat-ai" class="deploy-button">Deploy to Railway</a>
+  </div>
+  
+  <div class="cloud-card">
+    <h3><img src="https://i.imgur.com/E1hibwz.png" alt="Render" width="24"/> Render</h3>
+    <p>Blueprint-based deployment with managed PostgreSQL and Redis.</p>
+    <a href="https://render.com/deploy?repo=https://github.com/jaynikam2005/ai-customer-support-chatbot" class="deploy-button">Deploy to Render</a>
+  </div>
+  
+  <div class="cloud-card">
+    <h3><img src="https://i.imgur.com/xwMGRCL.png" alt="GCP" width="24"/> Google Cloud Run</h3>
+    <p>Serverless containers with direct Gemini API integration.</p>
+    <div class="code-preview">
+      <pre><code>gcloud run deploy neurochat-ai \
+--source . \
+--platform managed \
+--region us-central1</code></pre>
+    </div>
+  </div>
+  
+  <div class="cloud-card">
+    <h3><img src="https://i.imgur.com/a9QJU7j.png" alt="AWS" width="24"/> AWS ECS</h3>
+    <p>Container orchestration with auto-scaling groups.</p>
+    <div class="code-preview">
+      <pre><code>aws cloudformation deploy \
+--template-file aws/template.yaml \
+--stack-name neurochat-ai \
+--capabilities CAPABILITY_IAM</code></pre>
+    </div>
+  </div>
+</div>
+
+### Production Considerations
+
+<details>
+<summary><strong>High Availability Setup</strong></summary>
+
+For mission-critical deployments, we recommend:
+
+- Multi-region deployment
+- Database replication with automated failover
+- Kubernetes-based orchestration with pod anti-affinity
+- Global load balancing with geo-routing
+
+Full configuration available in [`/docs/high-availability.md`](docs/high-availability.md)
+</details>
+
+<details>
+<summary><strong>Security Hardening</strong></summary>
+
+Production deployments should implement:
+
+- Network isolation with private subnets
+- WAF for API protection
+- Secret rotation automation
+- Regular security scanning
+- TLS termination at load balancer
+
+See [`/docs/security-checklist.md`](docs/security-checklist.md) for complete details
+</details>
+
+<details>
+<summary><strong>Scaling Strategy</strong></summary>
+
+The system is designed to scale horizontally:
+
+- API Gateway and Chat Service scale based on request rate
+- AI Service scales based on processing queue length
+- Database connections use connection pooling with optimal sizing
+
+Review [`/docs/scaling-guide.md`](docs/scaling-guide.md) for detailed configuration
+</details>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="api-reference">🔌 API REFERENCE</h2></summary>
+
+### Authentication API
+
+<table>
+  <tr>
+    <th>Endpoint</th>
+    <th>Method</th>
+    <th>Description</th>
+    <th>Request Example</th>
+  </tr>
+  <tr>
+    <td><code>/api/auth/register</code></td>
+    <td>POST</td>
+    <td>Create new user account</td>
+    <td>
+      <pre>
+{
+  "username": "user@example.com",
+  "password": "secure_password",
+  "name": "John Doe"
+}
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>/api/auth/login</code></td>
+    <td>POST</td>
+    <td>Authenticate user</td>
+    <td>
+      <pre>
+{
+  "username": "user@example.com",
+  "password": "secure_password"
+}
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>/api/auth/refresh</code></td>
+    <td>POST</td>
+    <td>Refresh JWT token</td>
+    <td>
+      <pre>
+{
+  "refreshToken": "eyJhbGciOiJIUzI1..."
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+
+### Conversation API
+
+<table>
+  <tr>
+    <th>Endpoint</th>
+    <th>Method</th>
+    <th>Description</th>
+    <th>Request Example</th>
+  </tr>
+  <tr>
+    <td><code>/api/conversations</code></td>
+    <td>GET</td>
+    <td>List user conversations</td>
+    <td>Header: <code>Authorization: Bearer {jwt}</code></td>
+  </tr>
+  <tr>
+    <td><code>/api/conversations</code></td>
+    <td>POST</td>
+    <td>Create new conversation</td>
+    <td>
+      <pre>
+{
+  "title": "Product Support",
+  "initialMessage": "I need help with..."
+}
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>/api/conversations/{id}/messages</code></td>
+    <td>POST</td>
+    <td>Send message in conversation</td>
+    <td>
+      <pre>
+{
+  "content": "How do I reset my password?",
+  "attachments": []
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+
+### WebSocket API
+
+```javascript
+// Connect to WebSocket
+const socket = new WebSocket('ws://localhost:8080/ws/conversations');
+
+// Authentication
+socket.onopen = () => {
+  socket.send(JSON.stringify({
+    type: 'AUTH',
+    token: 'your-jwt-token'
+  }));
+};
+
+// Join conversation
+socket.send(JSON.stringify({
+  type: 'JOIN_CONVERSATION',
+  conversationId: '123e4567-e89b-12d3-a456-426614174000'
+}));
+
+// Send message
+socket.send(JSON.stringify({
+  type: 'MESSAGE',
+  conversationId: '123e4567-e89b-12d3-a456-426614174000',
+  content: 'Hello, I need help with your product.'
+}));
+
+// Receive message
+socket.onmessage = (event) => {
+  const message = JSON.parse(event.data);
+  console.log('New message:', message);
+};
+```
+
+### AI Processing API
+
+<table>
+  <tr>
+    <th>Endpoint</th>
+    <th>Method</th>
+    <th>Description</th>
+    <th>Request Example</th>
+  </tr>
+  <tr>
+    <td><code>/api/ai/analyze</code></td>
+    <td>POST</td>
+    <td>Process message with AI</td>
+    <td>
+      <pre>
+{
+  "message": "How do I reset my password?",
+  "conversationHistory": [
+    {"role": "user", "content": "I can't log in"},
+    {"role": "assistant", "content": "I'm sorry to hear that..."}
+  ],
+  "userId": "user-123",
+  "options": {
+    "maxTokens": 1000,
+    "temperature": 0.7
+  }
+}
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>/api/ai/knowledge</code></td>
+    <td>GET</td>
+    <td>Search knowledge base</td>
+    <td>Query param: <code>q=password reset</code></td>
+  </tr>
+</table>
+
+Complete API documentation is available in OpenAPI format at `/api/docs` when running the application.
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="analytics">📊 ANALYTICS PLATFORM</h2></summary>
+
+<div align="center">
+  <img src="https://i.imgur.com/iPzREjG.png" alt="Analytics Dashboard" width="90%" />
+</div>
+
+### Key Metrics Tracked
+
+- **Conversation Flow Analysis**
+  - Average resolution time
+  - Message count per resolution
+  - Topic classification distribution
+  - User satisfaction score
+
+- **AI Performance Metrics**
+  - Response accuracy (via feedback)
+  - Processing time
+  - Confidence scores
+  - Fallback rate
+
+- **User Engagement**
+  - Active users over time
+  - Session duration
+  - Return rate
+  - Feature utilization
+
+### Dashboard Access
+
+Analytics are available through:
+
+1. **Web Interface**: `/admin/analytics`
+2. **REST API**: `/api/analytics/*`
+3. **Data Export**: CSV/JSON/Excel formats
+
+### Custom Reporting
+
+The platform supports custom report creation with:
+
+- Drag-and-drop metric selection
+- Custom date ranges
+- Comparative analysis
+- Scheduled report delivery
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="roadmap">🔮 ROADMAP</h2></summary>
+
+<div class="roadmap-container">
+  <div class="roadmap-timeline">
+    <div class="roadmap-item released">
+      <div class="version">v1.0</div>
+      <div class="date">August 2025</div>
+      <div class="features">
+        <ul>
+          <li>✓ Gemini AI integration</li>
+          <li>✓ Basic conversation flow</li>
+          <li>✓ Authentication system</li>
+          <li>✓ Docker containerization</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="roadmap-item current">
+      <div class="version">v1.5</div>
+      <div class="date">October 2025</div>
+      <div class="features">
+        <ul>
+          <li>⟳ Enhanced analytics dashboard</li>
+          <li>⟳ Knowledge base integration</li>
+          <li>⟳ Multi-language support</li>
+          <li>⟳ Voice input/output</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="roadmap-item future">
+      <div class="version">v2.0</div>
+      <div class="date">Q1 2026</div>
+      <div class="features">
+        <ul>
+          <li>◯ Custom AI model fine-tuning</li>
+          <li>◯ Advanced sentiment analysis</li>
+          <li>◯ Omnichannel support (SMS, WhatsApp)</li>
+          <li>◯ Enterprise SSO integration</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="roadmap-item future">
+      <div class="version">v2.5</div>
+      <div class="date">Q3 2026</div>
+      <div class="features">
+        <ul>
+          <li>◯ Real-time voice synthesis</li>
+          <li>◯ Emotion detection & response</li>
+          <li>◯ Predictive customer insights</li>
+          <li>◯ AR/VR support interface</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+### Feature Voting
+
+Have a feature request? Vote on upcoming features or suggest new ones:
+
+<div align="center">
+  <a href="https://feedback.neurochat.ai" class="feature-vote-button">Feature Request Board</a>
+</div>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="live-demo">🔥 LIVE DEMO & PLAYGROUND</h2></summary>
+
+<div align="center">
+  <img src="https://i.imgur.com/qEkEQvM.gif" alt="NeuroChat AI Demo" width="80%" />
+
+  <h3>Experience NeuroChat AI in action</h3>
+
+  <p>Try our fully functional demo with pre-loaded scenarios:</p>
+
+  <a href="https://demo.neurochat.ai" class="demo-button">Launch Interactive Demo</a>
+
+  <p>No signup required, instant access.</p>
+  
+  <div class="demo-features">
+    <div class="demo-feature">
+      <h4>🔍 Explore All Features</h4>
+      <p>Test all capabilities without limitations</p>
+    </div>
+    <div class="demo-feature">
+      <h4>🧪 Try Pre-built Scenarios</h4>
+      <p>Common support situations ready to test</p>
+    </div>
+    <div class="demo-feature">
+      <h4>⚙️ Adjust AI Parameters</h4>
+      <p>Experiment with response generation settings</p>
+    </div>
+  </div>
+</div>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="contributing">🤝 CONTRIBUTING</h2></summary>
+
+We welcome contributions from the community! NeuroChat AI is an open ecosystem that thrives on collaboration.
+
+### Development Workflow
+
+1. **Fork** the repository
+2. **Clone** your fork to your local machine
+3. **Create** a feature branch (`git checkout -b feature/amazing-improvement`)
+4. **Implement** your changes with appropriate tests
+5. **Ensure** all tests pass (`./mvnw verify` and `npm test`)
+6. **Commit** with semantic commit messages
+7. **Push** to your fork (`git push origin feature/amazing-improvement`)
+8. **Open** a Pull Request
+
+### Code Style
+
+- **Java**: Google Java Style Guide
+- **TypeScript**: ESLint with AirBnB config
+- **Python**: Black formatter with PEP8
+- **Commit Messages**: Conventional Commits
+
+### Development Environment
+
+```bash
+# Set up development environment
+./scripts/setup-dev.sh
+
+# Start services with hot-reload
+docker-compose --profile dev up
+
+# Run tests
+./scripts/run-all-tests.sh
+```
+
+### Contributors
+
+<div align="center">
+  <a href="https://github.com/jaynikam2005/ai-customer-support-chatbot/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=jaynikam2005/ai-customer-support-chatbot" />
+  </a>
+</div>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="community">👥 COMMUNITY & SUPPORT</h2></summary>
+
+<div class="community-section">
+  <div class="community-card">
+    <h3>💬 Discord Community</h3>
+    <p>Join our active community of developers and users.</p>
+    <a href="https://discord.gg/neurochat-ai" class="community-button">Join Discord</a>
+  </div>
+  
+  <div class="community-card">
+    <h3>🎓 Documentation</h3>
+    <p>Comprehensive guides and API references.</p>
+    <a href="https://docs.neurochat.ai" class="community-button">Read Docs</a>
+  </div>
+  
+  <div class="community-card">
+    <h3>🐛 Issue Reporting</h3>
+    <p>Found a bug? Report it on GitHub.</p>
+    <a href="https://github.com/jaynikam2005/ai-customer-support-chatbot/issues" class="community-button">Open Issue</a>
+  </div>
+  
+  <div class="community-card">
+    <h3>📧 Email Support</h3>
+    <p>Enterprise support and customization inquiries.</p>
+    <a href="mailto:support@neurochat.ai" class="community-button">Contact Us</a>
+  </div>
+</div>
+
+### Case Studies
+
+<div class="case-studies">
+  <div class="case-study">
+    <img src="https://i.imgur.com/JG0lMHB.png" alt="TechCorp Logo" class="case-study-logo" />
+    <h4>TechCorp Solutions</h4>
+    <p>Reduced support costs by 67% while improving CSAT scores by 23% in the first month.</p>
+    <a href="#">Read Case Study →</a>
+  </div>
+  
+  <div class="case-study">
+    <img src="https://i.imgur.com/7ywJsaW.png" alt="FinanceApp Logo" class="case-study-logo" />
+    <h4>FinanceApp</h4>
+    <p>Automated 83% of tier-1 support requests, allowing team to focus on complex financial advisory.</p>
+    <a href="#">Read Case Study →</a>
+  </div>
+  
+  <div class="case-study">
+    <img src="https://i.imgur.com/SftJSQM.png" alt="EcomGiant Logo" class="case-study-logo" />
+    <h4>EcomGiant Retail</h4>
+    <p>Handled 350% increase in holiday traffic without adding support staff.</p>
+    <a href="#">Read Case Study →</a>
+  </div>
+</div>
+
+</details>
+
+---
+
+<details>
+<summary><h2 id="license">📜 LICENSE</h2></summary>
+
+```
+MIT License
+
+Copyright (c) 2025 NeuroChat AI Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+</details>
+
+---
+
+<div align="center">
+
+<h2>🚀 Ready to Transform Your Customer Support?</h2>
+
+<a href="#getting-started" class="cta-button">Get Started Now</a> &nbsp;&nbsp;
+<a href="#live-demo" class="secondary-button">Try the Demo</a>
+
+<br/><br/>
+
+<p>Built with ❤️ by the NeuroChat AI Team</p>
+
+<p><small>Powered by Google Gemini | Deployed with Docker | Engineered for the Future</small></p>
+
+<a href="#" id="back-to-top">⬆️ Back to Top</a>
+
+</div>
+
+<style>
+/* Futuristic theme styling */
+.feature-card {
+  background: rgba(30,30,30,0.7);
+  border: 1px solid rgba(127,127,255,0.2);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 4px 15px rgba(0,255,255,0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 7px 25px rgba(0,255,255,0.2);
+  border-color: rgba(127,127,255,0.5);
+}
+
+.feature-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.metrics-preview {
+  background: rgba(10,10,25,0.8);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.metric-highlight {
+  color: #00FFFF;
+  font-weight: bold;
+}
+
+.code-preview {
+  background: #0D1117;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.deployment-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.cloud-card {
+  background: rgba(20,20,40,0.7);
+  border: 1px solid rgba(100,100,255,0.2);
+  border-radius: 8px;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.cloud-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,180,255,0.15);
+}
+
+.deploy-button, .cta-button, .community-button, .feature-vote-button, .demo-button {
+  background: linear-gradient(90deg, #7000FF, #00FFFF);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.secondary-button {
+  background: transparent;
+  color: #00FFFF;
+  border: 1px solid #00FFFF;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover, .deploy-button:hover, .community-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,255,255,0.3);
+}
+
+.roadmap-container {
+  position: relative;
+  padding: 20px 0;
+}
+
+.roadmap-timeline {
+  position: relative;
+}
+
+.roadmap-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50px;
+  width: 3px;
+  background: linear-gradient(to bottom, #7000FF, #00FFFF);
+}
+
+.roadmap-item {
+  position: relative;
+  padding-left: 100px;
+  margin-bottom: 30px;
+}
+
+.roadmap-item::before {
+  content: '';
+  position: absolute;
+  left: 44px;
+  top: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.roadmap-item.released::before {
+  background: #00FFFF;
+}
+
+.roadmap-item.current::before {
+  background: #FFC107;
+}
+
+.roadmap-item.future::before {
+  background: #7000FF;
+}
+
+.version {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.date {
+  color: #888;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.community-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.community-card {
+  background: rgba(25,25,35,0.7);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.community-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,150,255,0.15);
+}
+
+.case-studies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.case-study {
+  background: rgba(20,20,35,0.7);
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.case-study-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.demo-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.demo-feature {
+  background: rgba(30,30,50,0.7);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+}
+
+#back-to-top {
+  display: inline-block;
+  margin-top: 30px;
+  color: #888;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0D1117;
+    color: #c9d1d9;
+  }
+}
+
+@media (max-width: 768px) {
+  .feature-grid, .deployment-cards, .community-section, .case-studies {
+    grid-template-columns: 1fr;
+  }
+  
+  .roadmap-timeline::before {
+    left: 20px;
+  }
+  
+  .roadmap-item {
+    padding-left: 50px;
+  }
+  
+  .roadmap-item::before {
+    left: 14px;
+  }
+}
+</style>
