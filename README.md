@@ -400,7 +400,7 @@ Authorization: Bearer <jwt_token>
 
 ## 🚀 **Deployment**
 
-### � **Simplified Deployment Scripts**
+### 🛠️ **Simplified Deployment Scripts**
 
 For convenient deployment to various platforms, use our deployment scripts:
 
@@ -417,7 +417,7 @@ These scripts provide guided options for:
 - Cloud deployment preparation
 - Deployment checklist generation
 
-### �🐳 **Docker Deployment (Recommended)**
+### 🐳 **Docker Deployment (Recommended for Local Development)**
 
 ```bash
 # Production deployment
@@ -430,9 +430,59 @@ docker-compose up --build
 docker-compose up --scale java-backend=3
 ```
 
-### ☁️ **Cloud Deployment**
+### 🚂 **Railway Deployment (Recommended for Production)**
 
-We provide comprehensive deployment guidance for all platforms:
+Deploy quickly and easily to [Railway](https://railway.app) - a modern cloud platform that's perfect for this project.
+
+<details>
+<summary><b>🚄 One-Click Railway Setup</b></summary>
+
+Use our automated setup scripts to initialize your Railway project:
+
+```bash
+# For Linux/Mac
+./railway-setup.sh
+
+# For Windows PowerShell
+./railway-setup.ps1
+```
+
+These scripts will:
+- Install Railway CLI if not present
+- Log you into Railway
+- Create a new project
+- Add PostgreSQL database
+- Guide you through the rest of the deployment
+</details>
+
+<details>
+<summary><b>📋 Railway Deployment Steps</b></summary>
+
+1. **Create Railway Project & Database**
+   - Sign up at [railway.app](https://railway.app)
+   - Create new project
+   - Add PostgreSQL service
+
+2. **Deploy Database Schema**
+   - Run the `db-schema.sql` file in Railway's SQL console
+
+3. **Deploy Services**
+   - Deploy Python AI Service (backend-python)
+   - Deploy Java Backend (backend-java)
+   - Deploy Frontend (frontend)
+   - Each service has a pre-configured `railway.json` file
+
+4. **Environment Variables**
+   - Use our `.env.railway` template
+   - Link services with Railway's variable references
+
+5. **Complete Documentation**
+   - [📝 Railway Deployment Guide](RAILWAY_DEPLOYMENT.md) - Full instructions
+</details>
+
+### ☁️ **Other Cloud Deployment Options**
+
+We provide comprehensive deployment guidance for multiple platforms:
 
 - [📝 Main Deployment Guide](DEPLOYMENT.md) - Complete deployment instructions
 - [📝 Frontend Deployment to Vercel](frontend/DEPLOY_TO_VERCEL.md) - Deploy the React frontend

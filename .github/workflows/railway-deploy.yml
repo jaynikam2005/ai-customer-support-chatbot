@@ -1,0 +1,34 @@
+# Railway GitHub Actions Workflow
+
+name: Deploy to Railway
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+      
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          echo "Deploying Database..."
+          railway up --service chatbot-db
+          
+          echo "Deploying Python AI Service..."
+          railway up --service python-ai-service
+          
+          echo "Deploying Java Backend..."
+          railway up --service java-backend
+          
+          echo "Deploying Frontend..."
+          railway up --service frontend
