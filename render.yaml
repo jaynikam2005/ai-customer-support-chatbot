@@ -1,5 +1,5 @@
 services:
-  # PostgreSQL Database
+  # PostgreSQL Database (no disk on free plan)
   - type: pserv
     name: chatbot-db
     env: docker
@@ -12,10 +12,6 @@ services:
         value: chatbot_password
       - key: POSTGRES_DB
         value: chatbot
-    disk:
-      name: postgres
-      mountPath: /var/lib/postgresql/data
-      sizeGB: 10
     autoDeploy: false
 
   # Java Backend
@@ -33,7 +29,7 @@ services:
         fromService:
           type: pserv
           name: chatbot-db
-          envVarKey: POSTGRES_URL
+          property: connectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromService:
           type: pserv
@@ -44,22 +40,32 @@ services:
           type: pserv
           name: chatbot-db
           envVarKey: POSTGRES_PASSWORD
-      - key: AI_SERVICE_URL
+      - key: AI_SERVICE_HOST
         fromService:
           type: web
           name: chatbot-python-ai
-          property: defaultURL
+          property: host
+      - key: AI_SERVICE_PORT
+        fromService:
+          type: web
+          name: chatbot-python-ai
+          property: port
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRATION
         value: 86400000
       - key: JAVA_OPTS
         value: "-Xmx512m -Xms128m"
-      - key: APP_CORS_ALLOWED_ORIGINS
+      - key: APP_CORS_ALLOWED_ORIGINS_HOST
         fromService:
           type: web
           name: chatbot-frontend
-          property: defaultURL
+          property: host
+      - key: APP_CORS_ALLOWED_ORIGINS_PORT
+        fromService:
+          type: web
+          name: chatbot-frontend
+          property: port
     healthCheckPath: /actuator/health
     autoDeploy: true
 
@@ -71,7 +77,6 @@ services:
     dockerContext: ./backend-python
     plan: free
     buildCommand: cd backend-python && pip install -r requirements.txt
-    startCommand: cd backend-python && python -m app.main
     envVars:
       - key: GOOGLE_API_KEY
         sync: false
@@ -85,11 +90,16 @@ services:
         value: 1
       - key: PYTHONPATH
         value: /workspace
-      - key: ALLOWED_ORIGINS
+      - key: ALLOWED_ORIGINS_HOST
         fromService:
           type: web
           name: chatbot-frontend
-          property: defaultURL
+          property: host
+      - key: ALLOWED_ORIGINS_PORT
+        fromService:
+          type: web
+          name: chatbot-frontend
+          property: port
     healthCheckPath: /health
     autoDeploy: true
 
@@ -103,9 +113,14 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 18.16.0
-      - key: VITE_API_URL
+      - key: VITE_API_HOST
         fromService:
           type: web
           name: chatbot-java-api
-          property: defaultURL
+          property: host
+      - key: VITE_API_PORT
+        fromService:
+          type: web
+          name: chatbot-java-api
+          property: port
     autoDeploy: true
