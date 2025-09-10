@@ -4,7 +4,7 @@ services:
     name: chatbot-db
     env: docker
     plan: free
-    repo: https://github.com/render-examples/postgres.git
+    repo: https://github.com/jaynikam2005/ai-customer-support-chatbot
     envVars:
       - key: POSTGRES_USER
         value: ai_customer_support_chatbot_db_user
