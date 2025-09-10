@@ -7,11 +7,11 @@ services:
     repo: https://github.com/render-examples/postgres.git
     envVars:
       - key: POSTGRES_USER
-        value: chatbot_user
+        value: ai_customer_support_chatbot_db_user
       - key: POSTGRES_PASSWORD
-        value: chatbot_password
+        value: o7fbyUPBE4QmzStDGYHJnl1kdiviHlCv
       - key: POSTGRES_DB
-        value: chatbot
+        value: ai_customer_support_chatbot_db
     autoDeploy: false
 
   # Java Backend
