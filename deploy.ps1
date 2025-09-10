@@ -15,7 +15,8 @@ Write-Host ""
 # Function to check if a command exists
 function Test-CommandExists {
     param ($command)
-    return ($null -ne (Get-Command $command -ErrorAction SilentlyContinue))
+    $exists = $null -ne (Get-Command $command -ErrorAction SilentlyContinue)
+    return $exists
 }
 
 # Check for required tools
@@ -28,23 +29,7 @@ if (-not (Test-CommandExists "docker")) {
     $missingTools = $true
 }
 
-# Determine the correct Docker Compose command
-$composeCmd = $null
-try {
-    $null = & docker compose version 2>$null
-    $composeCmd = "docker compose"
-} catch {
-    try {
-        $null = docker-compose --version 2>$null
-        if ($LASTEXITCODE -eq 0) {
-            $composeCmd = "docker-compose"
-        }
-    } catch {
-        # leave $composeCmd null
-    }
-}
-
-if (-not $composeCmd) {
+if (-not (Test-CommandExists "docker-compose") -and -not (docker compose --version 2>$null)) {
     Write-Host "X Docker Compose not found. Please install Docker Desktop or Docker Compose plugin." -ForegroundColor $Red
     $missingTools = $true
 }
@@ -94,25 +79,30 @@ Write-Host ""
 Write-Host "How would you like to deploy?" -ForegroundColor $Blue
 Write-Host "1) Local deployment with Docker Compose"
 Write-Host "2) Prepare for Render deployment"
-Write-Host "3) Prepare for Railway deployment"
+Write-Host "3) Prepare for Railway deployment" 
 Write-Host "4) Prepare for cloud deployment with separate services"
 Write-Host "5) Exit"
 
 $deploymentChoice = Read-Host "Enter your choice (1-5)"
 
 switch ($deploymentChoice) {
-    "1" {
+    "1" { 
+        # Local Docker Compose deployment
         Write-Host "Starting local deployment with Docker Compose..." -ForegroundColor $Yellow
-
+        
+        # Check for frontend environment variables
         if (-not (Test-Path "frontend/.env.local")) {
             Write-Host "Creating frontend/.env.local" -ForegroundColor $Yellow
-            "" | Out-File -FilePath "frontend/.env.local" -Encoding utf8
+            @"
+VITE_API_URL=http://localhost:8080
+"@ | Out-File -FilePath "frontend/.env.local" -Encoding utf8
             Write-Host "✓ Created frontend/.env.local" -ForegroundColor $Green
         }
-
+        
+        # Start containers
         Write-Host "Building and starting containers..." -ForegroundColor $Yellow
-        & $composeCmd up -d --build
-
+        docker-compose up -d --build
+        
         if ($LASTEXITCODE -eq 0) {
             Write-Host "✓ Deployment successful!" -ForegroundColor $Green
             Write-Host "✓ Services are now running:" -ForegroundColor $Green
@@ -126,6 +116,7 @@ switch ($deploymentChoice) {
         }
     }
     "2" {
+        # Render deployment preparation
         Write-Host "Preparing for Render deployment..." -ForegroundColor $Yellow
         Write-Host "✓ Your project is already configured for Render deployment." -ForegroundColor $Green
         Write-Host "Follow these steps:" -ForegroundColor $Yellow
@@ -136,6 +127,7 @@ switch ($deploymentChoice) {
         Write-Host "See the DEPLOYMENT.md files in each directory for detailed instructions." -ForegroundColor $Yellow
     }
     "3" {
+        # Railway deployment preparation
         Write-Host "Preparing for Railway deployment..." -ForegroundColor $Yellow
         Write-Host "✓ Your project is already configured for Railway deployment." -ForegroundColor $Green
         Write-Host "Follow these steps:" -ForegroundColor $Yellow
@@ -145,18 +137,49 @@ switch ($deploymentChoice) {
         Write-Host "See the DEPLOYMENT.md files in each directory for detailed instructions." -ForegroundColor $Yellow
     }
     "4" {
+        # Cloud deployment with separate services
         Write-Host "Preparing for cloud deployment with separate services..." -ForegroundColor $Yellow
         Write-Host "✓ Created a deployment checklist:" -ForegroundColor $Green
-
+        
         @"
 # Deployment Checklist for AI Customer Support Chatbot
-...
-"@ | Out-File -FilePath "DEPLOYMENT_CHECKLIST.md" -Encoding utf8
 
+## Database Deployment
+- [ ] Deploy PostgreSQL database (see database/DEPLOYMENT.md)
+- [ ] Run database migrations
+- [ ] Set up database credentials securely
+- [ ] Configure database backups
+
+## Python AI Service Deployment
+- [ ] Set up environment variables (copy from .env.sample)
+- [ ] Deploy Python service (see backend-python/DEPLOYMENT.md)
+- [ ] Verify health endpoint: /health
+- [ ] Configure API keys securely
+
+## Java Backend Deployment
+- [ ] Configure to use your PostgreSQL database
+- [ ] Configure to connect to your Python AI service
+- [ ] Deploy Java service (see backend-java/DEPLOYMENT.md)
+- [ ] Verify health endpoint: /actuator/health
+
+## Frontend Deployment
+- [ ] Configure VITE_API_URL to point to your Java backend
+- [ ] Deploy frontend (see frontend/DEPLOY_TO_VERCEL.md)
+- [ ] Verify connectivity
+
+## Post-Deployment Verification
+- [ ] Test user registration
+- [ ] Test user login
+- [ ] Test chatbot Q&A functionality
+- [ ] Verify that caching is working properly
+- [ ] Check security settings (CORS, authentication)
+"@ | Out-File -FilePath "DEPLOYMENT_CHECKLIST.md" -Encoding utf8
+        
         Write-Host "✓ Created DEPLOYMENT_CHECKLIST.md" -ForegroundColor $Green
         Write-Host "Follow the checklist and refer to the DEPLOYMENT.md files in each directory." -ForegroundColor $Yellow
     }
     "5" {
+        # Exit
         Write-Host "Exiting deployment tool." -ForegroundColor $Blue
         exit 0
     }
