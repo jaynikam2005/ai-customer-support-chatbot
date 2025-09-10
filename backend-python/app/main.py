@@ -15,6 +15,10 @@ from .faq_matcher import FAQMatcher
 from .gemini_response import GeminiResponseGenerator  # Use Gemini instead
 
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -71,8 +75,12 @@ class ResponseCache:
         key_str = request_data.message.lower().strip()
         return hashlib.md5(key_str.encode('utf-8')).hexdigest()
             
-# Initialize response cache
-response_cache = ResponseCache(max_size=200)
+# Initialize response cache with configurable settings from environment variables
+cache_enabled = os.getenv("RESPONSE_CACHE_ENABLED", "true").lower() == "true"
+cache_max_size = int(os.getenv("MAX_CACHE_ITEMS", "200"))
+cache_ttl = int(os.getenv("RESPONSE_CACHE_TTL", "3600"))  # Default 1 hour TTL
+
+response_cache = ResponseCache(max_size=cache_max_size, ttl_seconds=cache_ttl)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -107,9 +115,12 @@ app = FastAPI(
 )
 
 # Add CORS middleware after app is created
+# Get allowed origins from environment variable, fallback to all (*) for development
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",") if os.getenv("ALLOWED_ORIGINS") else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # for dev, allow all
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -213,10 +224,17 @@ async def analyze_message(request: AnalyzeRequest):
         raise HTTPException(status_code=500, detail="Internal server error during message analysis")
 
 if __name__ == "__main__":
+    # Get host and port from environment variables with fallbacks
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "5000"))
+    
+    # Determine if we're in development mode for auto-reload feature
+    dev_mode = os.getenv("ENVIRONMENT", "development").lower() == "development"
+    
     uvicorn.run(
         "app.main:app",
-        host="0.0.0.0",
-        port=5000,
-        reload=True,
+        host=host,
+        port=port,
+        reload=dev_mode,
         log_level="info"
     )

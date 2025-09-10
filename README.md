@@ -400,11 +400,28 @@ Authorization: Bearer <jwt_token>
 
 ## 🚀 **Deployment**
 
-### 🐳 **Docker Deployment (Recommended)**
+### � **Simplified Deployment Scripts**
+
+For convenient deployment to various platforms, use our deployment scripts:
+
+```bash
+# For Linux/Mac
+./deploy.sh
+
+# For Windows PowerShell
+./deploy.ps1
+```
+
+These scripts provide guided options for:
+- Local Docker deployment
+- Cloud deployment preparation
+- Deployment checklist generation
+
+### �🐳 **Docker Deployment (Recommended)**
 
 ```bash
 # Production deployment
-docker-compose -f docker-compose.prod.yml up -d
+docker-compose up -d
 
 # Development with hot reload
 docker-compose up --build
@@ -415,13 +432,14 @@ docker-compose up --scale java-backend=3
 
 ### ☁️ **Cloud Deployment**
 
-We provide detailed deployment guides for each component of the application:
+We provide comprehensive deployment guidance for all platforms:
 
+- [📝 Main Deployment Guide](DEPLOYMENT.md) - Complete deployment instructions
 - [📝 Frontend Deployment to Vercel](frontend/DEPLOY_TO_VERCEL.md) - Deploy the React frontend
 - [📝 Java Backend Deployment](backend-java/DEPLOYMENT.md) - Deploy the Spring Boot backend
 - [📝 Python AI Service Deployment](backend-python/DEPLOYMENT.md) - Deploy the FastAPI AI service
 - [📝 PostgreSQL Database Deployment](database/DEPLOYMENT.md) - Deploy and configure the database
-- [📝 CI/CD Workflow Setup](.github/CI_CD_SETUP.md) - Set up automated deployments
+- [📝 Security Configuration](SECURITY.md) - Production security best practices
 
 <details>
 <summary><b>🔵 Azure Container Instances</b></summary>
